@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 export default function MenuItem({
   label = "",
   href = "#",
-  icon = <ion-icon name="alert-circle-outline"></ion-icon>
+  icon = <></>
 }) {
   return (
     <Link href={href} className='w-full'>

@@ -1,5 +1,14 @@
 import React from 'react'
 import MenuItem from './utils/MenuItem'
+import {
+  ChartNoAxesCombined,
+  LifeBuoy,
+  Users,
+  House,
+  Bell,
+  Gift
+} from 'lucide-react'
+
 export default function Nav() {
   return (
     <aside className="col-span-2 p-2">
@@ -8,34 +17,35 @@ export default function Nav() {
           <MenuItem
             href='/dashboard'
             label='Dashboard'
-            icon={<ion-icon name="home-outline"></ion-icon>}
+            icon={<House />}
           />
           <MenuItem
             href='/deals'
             label='Deals'
-            icon={<ion-icon name="gift-outline"></ion-icon>}
+            icon={<Gift />}
           />
           <MenuItem
             href='/analytics'
             label='Analytics'
-            icon={<ion-icon name="stats-chart-outline"></ion-icon>}
+            icon={<ChartNoAxesCombined />}
           />
           <MenuItem
             href='/staff'
             label='Staff'
-            icon={<ion-icon name="people-outline"></ion-icon>}
+            icon={<Users />}
           />
         </div>
         <div>
+
           <MenuItem
-            href='/analytics'
-            label='Analytics'
-            icon={<ion-icon name="stats-chart-outline"></ion-icon>}
+            href='/notification'
+            label='Notification'
+            icon={<Bell />}
           />
           <MenuItem
-            href='/staff'
-            label='Staff'
-            icon={<ion-icon name="people-outline"></ion-icon>}
+            href='/support'
+            label='Support'
+            icon={<LifeBuoy />}
           />
         </div>
       </nav>

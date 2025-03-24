@@ -1,6 +1,10 @@
 'use client'
 import { Toggle } from "@/components/ui/toggle"
 import { useState } from "react"
+import {
+  Moon,
+  Sun
+} from 'lucide-react'
 
 export default function DarkModeBtn() {
   const [isDark, setIsDark] = useState(false)
@@ -14,8 +18,8 @@ export default function DarkModeBtn() {
     >
       {
         isDark ?
-          <ion-icon name="moon-outline"></ion-icon> :
-          <ion-icon name="sunny-outline"></ion-icon>
+          <Moon /> :
+          <Sun />
       }
     </Toggle>
   )

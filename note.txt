@@ -1,0 +1,1 @@
+La route register n'envoie aucun message a part le status 200.

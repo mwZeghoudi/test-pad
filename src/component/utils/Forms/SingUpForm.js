@@ -1,8 +1,13 @@
 'use client'
 import { z } from "zod"
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
 import FormComponent from "../FormComponent"
 import FormLink from "../FormLink"
+import { register } from "@/@/lib/auth"
 export default function SignUpForm() {
+  const router = useRouter();
+  const [state, formAction, pending] = useActionState(register, { success: null, errors: {} })
   const consentLabel = <div className="grid gap-1.5 leading-none text-xs">
     <div
       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -60,14 +65,17 @@ export default function SignUpForm() {
     }
   ]
 
-  function onSubmit(values) {
-    console.log(values)
-  }
+  useEffect(() => {
+    if (state.success) {
+      router.push('/sign-in');
+    }
+  }, [state])
 
   return (
     <FormComponent
       formObject={formObject}
-      action={onSubmit}
+      action={formAction}
+      disable={pending}
     />
   )
 }

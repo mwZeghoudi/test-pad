@@ -1,33 +1,40 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useTransition } from "react"; // ✅ Importer useTransition
 
-import {
-  Form,
-  FormField,
-} from "@/components/ui/form"
-import MainBtn from "./MainBtn"
-import FormInput from "./FormInput"
-import { formConstructor } from "@/@/lib/utils"
+import { Form, FormField } from "@/components/ui/form";
+import MainBtn from "./MainBtn";
+import FormInput from "./FormInput";
+import { formConstructor } from "@/@/lib/utils";
 
 export default function FormComponent({
   beforeSubmit,
-  className = '',
+  className = "",
   formObject,
   disable = false,
-  action
+  action, // ✅ Action serveur
 }) {
-  const { formSchema, defaultValues } = formConstructor(formObject)
+  const { formSchema, defaultValues } = formConstructor(formObject);
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues
-  })
+    defaultValues,
+  });
+
+  const [isPending, startTransition] = useTransition();
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+
+    // ✅ Exécute l'action serveur dans une transition
+    startTransition(() => {
+      action(formData);
+    });
+  };
 
   return (
     <Form {...form}>
-      <form
-        className="space-y-5 w-full"
-        action={action}
-      >
+      <form className="space-y-5 w-full" onSubmit={form.handleSubmit(onSubmit)}>
         {formObject.map((el, i) => (
           <FormField
             key={i}
@@ -39,8 +46,8 @@ export default function FormComponent({
           />
         ))}
         {beforeSubmit}
-        <MainBtn type="submit" label="Submit" disable={disable} />
+        <MainBtn type="submit" label="Submit" disable={disable || isPending} />
       </form>
     </Form>
-  )
+  );
 }

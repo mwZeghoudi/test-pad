@@ -1,11 +1,9 @@
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-
-import Link from 'next/link';
 import DarkModeBtn from './utils/DarkModeBtn';
 import LangSelect from './utils/LangSelect';
 import Image from 'next/image';
+import UserMenu from './utils/UserMenu';
 
 export default function Header() {
   return (
@@ -20,12 +18,7 @@ export default function Header() {
       <div className='flex items-center justify-between gap-5'>
         <DarkModeBtn />
         <LangSelect />
-        <Link href={'/profil'}>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </Link>
+        <UserMenu />
       </div>
     </header>
   )

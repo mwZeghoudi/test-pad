@@ -1,9 +1,15 @@
 'use client'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
 import { z } from "zod"
 import FormComponent from "../FormComponent"
 import { Checkbox } from "@/components/ui/checkbox"
 import FormLink from "../FormLink"
+import { login } from "@/@/lib/auth"
 export default function SignInForm() {
+  const router = useRouter();
+  const [state, formAction, pending] = useActionState(login, { success: null, errors: {} })
+
   const formObject = [
     {
       name: 'email',
@@ -20,15 +26,17 @@ export default function SignInForm() {
       defaultValue: ''
     }
   ]
-
-  function onSubmit(values) {
-    console.log(values)
-  }
+  useEffect(() => {
+    if (state.success) {
+      router.push('/dashboard');
+    }
+  }, [state])
 
   return (
     <FormComponent
       formObject={formObject}
-      action={onSubmit}
+      action={formAction}
+      disable={pending}
       beforeSubmit={
         <div className="flex items-center space-x-2 justify-between">
           <div className="flex items-center space-x-2">

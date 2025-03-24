@@ -13,6 +13,7 @@ export default function FormComponent({
   beforeSubmit,
   className = '',
   formObject,
+  disable = false,
   action
 }) {
   const { formSchema, defaultValues } = formConstructor(formObject)
@@ -25,7 +26,7 @@ export default function FormComponent({
     <Form {...form}>
       <form
         className="space-y-5 w-full"
-        onSubmit={form.handleSubmit(action)}
+        action={action}
       >
         {formObject.map((el, i) => (
           <FormField
@@ -33,12 +34,12 @@ export default function FormComponent({
             control={form.control}
             name={el.name}
             render={({ field }) => (
-              <FormInput className={className} field={field} {...el} />
+              <FormInput className={className} field={field} {...el} disable={disable} />
             )}
           />
         ))}
         {beforeSubmit}
-        <MainBtn type="submit" label="Submit" />
+        <MainBtn type="submit" label="Submit" disable={disable} />
       </form>
     </Form>
   )

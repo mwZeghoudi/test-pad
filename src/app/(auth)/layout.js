@@ -5,9 +5,9 @@ export default function AuthLayout({ children }) {
       <div className="flex-1 flex bg-red-50/20 justify-center items-center p-10">
         <Image
           className="w-full h-auto object-contain max-h-full"
-          src={'/auth.png'}
-          width={100}
-          height={200}
+          src={"/auth.png"}
+          width={1000}
+          height={1000}
           alt="Auth image"
         />
       </div>
@@ -15,5 +15,5 @@ export default function AuthLayout({ children }) {
         {children}
       </div>
     </main>
-  )
+  );
 }

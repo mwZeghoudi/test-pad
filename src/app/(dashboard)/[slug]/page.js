@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-export default function page({ slug }) {
+export default async function page({ params }) {
   return (
     <section className="space-y-5">
-      <h1>Bonjour! {slug}</h1>
+      <h1 className="text-3xl font-bold">{params.slug}</h1>
       <div className="flex gap-5 bg-gray-100 p-5 rounded-[20px]">
         <Image
           className="w-100 h-auto"

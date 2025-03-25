@@ -6,9 +6,7 @@ export default function DashboardLayout({ children }) {
     <div className="grid grid-cols-12 grid-rows-[auto_1fr] h-screen gap-4 p-4">
       <Header />
       <Nav />
-      <main className="col-span-10 bg-gray-100 p-6 rounded-lg">
-        {children}
-      </main>
+      <main className="col-span-10 bg-gray-200 p-6 rounded-lg">{children}</main>
     </div>
-  )
+  );
 }

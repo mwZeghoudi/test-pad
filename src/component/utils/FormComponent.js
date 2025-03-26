@@ -10,6 +10,7 @@ import { formConstructor } from "@/@/lib/utils";
 export default function FormComponent({
   beforeSubmit,
   className = "",
+  submitLabel = "Submit",
   formObject,
   disable = false,
   action, // ✅ Action serveur
@@ -46,7 +47,7 @@ export default function FormComponent({
           />
         ))}
         {beforeSubmit}
-        <MainBtn type="submit" label="Submit" disable={disable || isPending} />
+        <MainBtn type="submit" label={submitLabel} disable={disable || isPending} />
       </form>
     </Form>
   );

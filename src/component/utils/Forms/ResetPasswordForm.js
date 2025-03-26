@@ -23,6 +23,7 @@ export default function ResetPasswordForm() {
   }, [state])
   return (
     <FormComponent
+      submitLabel='Continue'
       formObject={formObject}
       action={formAction}
     />

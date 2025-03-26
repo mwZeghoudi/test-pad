@@ -33,6 +33,7 @@ export default function SignInForm() {
 
   return (
     <FormComponent
+      submitLabel='Sign In'
       formObject={formObject}
       action={formAction}
       disable={pending}

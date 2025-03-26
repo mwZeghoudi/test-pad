@@ -73,6 +73,7 @@ export default function SignUpForm() {
 
   return (
     <FormComponent
+      submitLabel="Sign Up"
       formObject={formObject}
       action={formAction}
       disable={pending}

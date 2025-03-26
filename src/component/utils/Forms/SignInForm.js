@@ -26,7 +26,7 @@ export default function SignInForm() {
       type: "password",
       validation: z
         .string()
-        .min(8, { message: "Username must be at least 8 characters." }),
+        .min(8, { message: "Password must be at least 8 characters." }),
       defaultValue: "",
     },
   ];
@@ -38,7 +38,7 @@ export default function SignInForm() {
 
   return (
     <FormComponent
-      submitLabel='Sign In'
+      submitLabel="Sign In"
       formObject={formObject}
       action={formAction}
       disable={pending}

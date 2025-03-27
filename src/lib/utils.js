@@ -26,4 +26,4 @@ export const zodValidation = {
     .string()
     .min(8, { message: "Password must be at least 8 characters." })
     .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, { message: 'Your password must have at least 8 characters, have at least one cap, have at least one special caractere and at least one number' }),
-}
+};

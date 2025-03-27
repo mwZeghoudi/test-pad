@@ -13,12 +13,13 @@ export default function FormComponent({
   submitLabel = "Submit",
   formObject,
   disable = false,
+  schema = null,
   action, // ✅ Action serveur
 }) {
   const { formSchema, defaultValues } = formConstructor(formObject);
   const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues,
+    resolver: zodResolver(schema || formSchema),
+    defaultValues: defaultValues || {}, // 👈 Assure qu'un objet est toujours fourni
   });
 
   const [isPending, startTransition] = useTransition();

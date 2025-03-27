@@ -61,6 +61,33 @@ export async function register(prevState, formData) {
 export async function resetPassword(prevState, formData) {
   try {
     const data = Object.fromEntries(formData);
+    const cookieStore = await cookies();
+    data.email = cookieStore.get("email")?.value;
+    data.resetCode = cookieStore.get("resetToken")?.value;
+    console.log(JSON.stringify(data));
+    const response = await fetch(
+      "https://api-dev.pokeadeal.com/api/Authenticate/reset-password-professional",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    console.log(response);
+    if (!response.ok) {
+      throw new Error("An error occurred while reseting the password");
+    }
+    return { success: true, data: { message: "Your password has been reseted" } };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+}
+
+export async function forgotPassword(prevState, formData) {
+  try {
+    const data = Object.fromEntries(formData);
     const response = await fetch(
       "https://api-dev.pokeadeal.com/api/Authenticate/forgot-password-professional",
       {

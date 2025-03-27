@@ -1,13 +1,15 @@
 'use client'
 import { useActionState, useEffect, useState } from 'react'
+import { redirect } from 'next/navigation'
 import { z } from "zod"
 import FormComponent from "../FormComponent"
-import { resetPassword } from '@/@/lib/auth';
+import { forgotPassword, resetPassword } from '@/@/lib/auth';
 import { toast } from "sonner";
 import { zodValidation } from '@/@/lib/utils';
 
 export default function ResetPasswordForm() {
-  const [state, formAction, pending] = useActionState(resetPassword, { success: null, errors: {} })
+  const [state, formAction, pending] = useActionState(forgotPassword, { success: null, errors: {} })
+  const [resetState, resetFormAction, resetPending] = useActionState(resetPassword, { success: null, errors: {} })
   const [isReset, setIsReset] = useState(false)
   const formObject = [
     {
@@ -18,30 +20,36 @@ export default function ResetPasswordForm() {
       defaultValue: ''
     },
   ]
-  const resetSchema = z.object({
-    password: zodValidation.password,
-    confirmPassword: z.string()
-  }).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"], // Associe l'erreur à `confirmPassword`
-  });
 
+  const passwordValidation = zodValidation.password;
+  const resetFormSchema = z.object({
+    newPassword: zodValidation.password,
+    confirmPassword: zodValidation.password,
+  }).superRefine(({ newPassword, confirmPassword }, ctx) => {
+    if (newPassword !== confirmPassword) {
+      ctx.addIssue({
+        path: ["confirmPassword"],
+        message: "Passwords do not match",
+      });
+    }
+  });
   const resetFormObject = [
     {
-      name: 'password',
+      name: 'newPassword',
       placeholder: 'New Password',
       type: 'password',
-      validation: resetSchema.shape.password,
+      validation: passwordValidation,
       defaultValue: ''
     },
     {
       name: 'confirmPassword',
       placeholder: 'Confirm New Password',
       type: 'password',
-      validation: resetSchema.shape.confirmPassword,
+      validation: passwordValidation,
       defaultValue: ''
     },
   ];
+
   useEffect(() => {
     const email = document.cookie
       .split("; ")
@@ -66,6 +74,24 @@ export default function ResetPasswordForm() {
       );
     }
   }, [state])
+  useEffect(() => {
+    if (resetState.success) {
+      toast("Your password has been reset",
+        {
+          type: "success",
+          duration: 5000,
+          position: "top-right",
+          unstyled: true,
+          className: "p-3 rounded-md text-white flex gap-2 justify-center items-center align-center bg-green-500"
+        }
+      );
+      document.cookie = "validEmail=; Max-Age=0; path=/;";
+      setTimeout(() => {
+        redirect("/sign-in");
+      }, 1400);
+    }
+  }, [resetState])
+
   return (
     <>
       {
@@ -73,8 +99,9 @@ export default function ResetPasswordForm() {
           <FormComponent
             submitLabel='Continue'
             formObject={resetFormObject}
-            action={formAction}
+            action={resetFormAction}
             disable={pending}
+            schema={resetFormSchema}
           />
           :
           <FormComponent

@@ -27,7 +27,12 @@ export default function FormInput({
                 checked={field.value}
                 onCheckedChange={field.onChange}
               /> :
-              <Input placeholder={placeholder} {...field} type={type} />
+              <Input
+                type={type}
+                placeholder={placeholder}
+                value={field.value ?? ''}
+                {...field}
+              />
           }
         </FormControl>
         <div className="space-y-1 leading-none">

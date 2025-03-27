@@ -1,11 +1,11 @@
 "use client";
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
 import FormComponent from "../FormComponent";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/@/components/ui/checkbox";
 import FormLink from "../FormLink";
 import { login } from "@/@/lib/auth";
+import { zodValidation } from "@/@/lib/utils";
 export default function SignInForm() {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(login, {
@@ -17,16 +17,14 @@ export default function SignInForm() {
       name: "email",
       placeholder: "Email",
       type: "email",
-      validation: z.string().email({ message: "Invalid email address" }),
+      validation: zodValidation.email,
       defaultValue: "",
     },
     {
       name: "password",
       placeholder: "password",
       type: "password",
-      validation: z
-        .string()
-        .min(8, { message: "Password must be at least 8 characters." }),
+      validation: zodValidation.loginPassword,
       defaultValue: "",
     },
   ];

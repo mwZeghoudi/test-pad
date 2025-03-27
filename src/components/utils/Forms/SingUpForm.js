@@ -1,12 +1,12 @@
 'use client'
-import { z } from "zod"
 import { useActionState, useEffect } from 'react'
-import { useRouter } from 'next/navigation';
 import FormComponent from "../FormComponent"
 import FormLink from "../FormLink"
 import { register } from "@/@/lib/auth"
+import { toast } from "sonner";
+import { zodValidation } from "@/@/lib/utils"
+
 export default function SignUpForm() {
-  const router = useRouter();
   const [state, formAction, pending] = useActionState(register, { success: null, errors: {} })
   const consentLabel = <div className="grid gap-1.5 leading-none text-xs">
     <div
@@ -26,32 +26,28 @@ export default function SignUpForm() {
       name: 'firstname',
       placeholder: 'First Name',
       type: 'name',
-      validation: z.string().toUpperCase().min(2, { message: "First Name too short" }).regex(/^[a-zA-Z\s-]{2,}$/, { message: 'Your First Name contain forbiden caracters' }),
+      validation: zodValidation.name,
       defaultValue: ''
     },
     {
       name: 'lastname',
       placeholder: 'Last Name',
       type: 'name',
-      validation: z.string().toUpperCase().min(2, { message: "Last Name too short" }).regex(/^[a-zA-Z\s-]{2,}$/, { message: 'Your Last Name contain forbiden caracters' }),
+      validation: zodValidation.name,
       defaultValue: ''
     },
     {
       name: 'email',
       placeholder: 'Email',
       type: 'email',
-      validation: z.string().email({ message: "Invalid email address" }),
+      validation: zodValidation.email,
       defaultValue: ''
     },
     {
       name: 'password',
       placeholder: 'password',
       type: 'password',
-      validation:
-        z
-          .string()
-          .min(8, { message: "Password must be at least 8 characters." })
-          .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, { message: 'Your password must have at least 8 characters, have at least one cap, have at least one special caractere and at least one number' }),
+      validation: zodValidation.password,
       defaultValue: '',
       description: 'Your password must have at least 8 characters, at least one cap, at least one special caracter and at least one number'
     },
@@ -60,14 +56,22 @@ export default function SignUpForm() {
       label: consentLabel,
       type: 'checkbox',
       className: "flex flex-row justify-between items-start space-y-0",
-      validation: z.boolean().default(false).refine(value => value === true, { message: "You must accept the terms and conditions." }),
+      validation: zodValidation.consent,
       defaultValue: false,
     }
   ]
 
   useEffect(() => {
     if (state.success) {
-      router.push('/sign-in');
+      toast("An email has been sent to you to confirm your email address",
+        {
+          type: "success",
+          duration: 10000,
+          position: "top-right",
+          unstyled: true,
+          className: "p-3 rounded-md text-white flex gap-2 justify-center items-center align-center bg-green-500"
+        }
+      );
     }
   }, [state])
 

@@ -1,5 +1,5 @@
-import Nav from "@/@/component/Nav";
-import Header from "@/@/component/Header";
+import Nav from "@/@/components/Nav";
+import Header from "@/@/components/Header";
 
 export default function DashboardLayout({ children }) {
   return (

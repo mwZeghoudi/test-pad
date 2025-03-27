@@ -1,8 +1,9 @@
-import LoginForm from '@/@/component/utils/Forms/SignInForm'
+import LoginForm from '@/@/components/utils/Forms/SignInForm'
 import Image from 'next/image'
-import FormLink from '@/@/component/utils/FormLink'
+import FormLink from '@/@/components/utils/FormLink'
+import AlertSonner from '@/@/components/utils/AlertSonner'
 
-export default function SignIn() {
+export default async function SignIn() {
   return (
     <div className='text-sm w-3/4 max-w-100 space-y-10 h-fit'>
       <div className='space-y-2'>
@@ -23,6 +24,7 @@ export default function SignIn() {
       <div className='text-center space-y-10'>
         <p>Don’t have an account? <FormLink href='/sign-up' label='Sign up' /></p>
       </div>
+      <AlertSonner />
     </div>
   )
 }

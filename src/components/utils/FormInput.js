@@ -4,9 +4,9 @@ import {
   FormLabel,
   FormItem,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@/@/components/ui/form"
+import { Input } from "@/@/components/ui/input"
+import { Checkbox } from "@/@/components/ui/checkbox"
 
 export default function FormInput({
   field,

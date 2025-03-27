@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTransition } from "react"; // ✅ Importer useTransition
 
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormField } from "@/@/components/ui/form";
 import MainBtn from "./MainBtn";
 import FormInput from "./FormInput";
 import { formConstructor } from "@/@/lib/utils";
@@ -26,8 +26,6 @@ export default function FormComponent({
   const onSubmit = async (data) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-
-    // ✅ Exécute l'action serveur dans une transition
     startTransition(() => {
       action(formData);
     });

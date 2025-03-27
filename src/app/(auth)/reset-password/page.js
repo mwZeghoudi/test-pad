@@ -1,6 +1,6 @@
-import ResetPasswordForm from '@/@/component/utils/Forms/ResetPasswordForm'
+import ResetPasswordForm from '@/@/components/utils/Forms/ResetPasswordForm'
 import Image from 'next/image'
-import FormLink from '@/@/component/utils/FormLink'
+import FormLink from '@/@/components/utils/FormLink'
 
 export default function ResetPassword() {
   return (

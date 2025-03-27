@@ -47,6 +47,8 @@ export async function register(prevState, formData) {
         body: JSON.stringify(data),
       }
     );
+    console.log(response);
+
     if (!response.ok) {
       throw new Error("An error occurred while signing up");
     }
@@ -88,7 +90,25 @@ export async function getUser() {
     return null;
   }
 }
+
 export async function logout() {
   (await cookies()).delete("accessToken");
   redirect("/sign-in");
+}
+
+export async function validatEmail(data) {
+  try {
+    const params = new URLSearchParams();
+    for (const key in data) {
+      params.append(key, data[key]);
+    }
+    const response = await fetch("https://api-dev.pokeadeal.com/api/Authenticate/confirm-email-professional?" + params);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error("An error occurred while validating the email");
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

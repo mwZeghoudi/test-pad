@@ -1,6 +1,6 @@
-import SignUpForm from '@/@/component/utils/Forms/SingUpForm'
+import SignUpForm from '@/@/components/utils/Forms/SingUpForm'
 import Image from 'next/image'
-import FormLink from '@/@/component/utils/FormLink'
+import FormLink from '@/@/components/utils/FormLink'
 
 export default function SignUp() {
   return (
